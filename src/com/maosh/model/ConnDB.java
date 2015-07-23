@@ -10,7 +10,7 @@ public class ConnDB {
 		try{
 			
 			Class.forName("org.gjt.mm.mysql.Driver");
-			ct=DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "maosh");
+			ct=DriverManager.getConnection("jdbc:mysql://dmaoshl0:3306/test", "root", "root");
 			
 		}catch(Exception e){
 			e.printStackTrace();

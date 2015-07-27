@@ -23,23 +23,69 @@
 
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<!-- 
 <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
+-->
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="js//bootstrap-3.3.5-dist/js/bootstrap.js"></script>
 <script type="text/javascript">
+
+
 $(document).ready(function(){
-	alert("hello");
-  $("#newPost").click(function(){
-    $("#newPost").rows="4";
-    $("#newPost").rows="4";
-  });
-});
+
+	  $("#newPostBTN").click(function(){
+		  var aut=document.getElementById("blog-author");
+		  var con=document.getElementById("newPost");
+	    $.post("blogcl",
+	    {
+	      flag:"addBlog",
+	      author:$("#author").text(),
+	      content:$("#newPost").val(),
+	    },
+	    function(data,status){
+	    	
+	      alert("发表成功");
+	      $("#newInsert").append(newpost);
+	    });
+	  });
+	/*  
+	  $("#deletePostBTN").click(function(){
+			alert("delete");
+		  var aut=document.getElementById("blog-author");
+		  var con=document.getElementById("newPost");
+	    $.post("blogcl",
+	    {
+	      flag:"deleteBlog",
+	      postId:postId,
+	    },
+	    function(data,status){
+	    	
+	      alert("发表成功");
+	    });
+	  });
+	*/
+	});
+
 function changeRows(){
 	document.getElementById("newPost").rows="4";
+
+}
+function deletePostById(blogId){
+	    $.post("blogcl",
+	    {
+	      flag:"deleteBlog",
+	      blogId:blogId,
+	    },
+	    function(data,status){
+	    	alert("deleted");
+	    	
+	    		  $("#"+blogId).remove();
+	    });
 }
 </script>
 </head>
@@ -67,7 +113,7 @@ function changeRows(){
 	<div class="container">
 
 		<div class="blog-header">
-			<h1 class="blog-title"><%=request.getParameter("username")%></h1>
+			<h1 class="blog-author" id="author"><%=request.getParameter("username")%></h1>
 			<p class="lead blog-description"><%=(String) request.getAttribute("profile")%></p>
 		</div>
 
@@ -75,11 +121,26 @@ function changeRows(){
 
 			<div class="blog-post input-group  col-md-6">
 				<span class="input-group-addon">new</span>
-				<textarea id=newPost class="form-control" rows="2" onclick="changeRows()" placeholder="What's happening?"></textarea>
+				<textarea id=newPost class="form-control" rows="2" " placeholder="What's happening?"></textarea>
+				<ul>
+				<span><a href="#">表情</a></span>
+				<snan><a href="#">图片</a></span>
+				<snan><a href="#">视频</a></span>
+				<snan><a href="#">@好友</a></span>
+				<span><button type="button" class=" btn btn-default" id="newPostBTN"
+									aria-label="Left Align">
+									发布
+								</button></span>
+								</ul>	
 				<!--  span class="input-group-addon">.00</span> -->
 				
 			</div>
-			<div class="content col-md-6 blog-main">
+			<div class="startList content col-md-6 blog-main">
+
+<!-- 新插入
+ -->
+ <span id="newInsert"></span>
+ 
 
 
 				<%
@@ -87,13 +148,27 @@ function changeRows(){
 						BlogBean bb = (BlogBean) al.get(i);
 				%>
 
-				<div class="row blog-post">
+				<div class="row blog-post" id=<%=bb.getBlogId()%>>
 					<div class="col-sm-2">
 						<img src="imgs/1.jpg" alt="photo" height="70" width="70" />
 					</div>
 					<div class="col-sm-10">
 						<div class="row">
-							<div class="author"><a href="#"><%=bb.getAuthor()%></a></div>
+							<div class="author col-sm-10"><a href="#"><%=bb.getAuthor()%></a></div>
+							<div hidden="hidden" ><%=bb.getBlogId()%></div>
+
+<div class="dropdown col-sm-2">
+   <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" 
+      data-toggle="dropdown">
+      <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation">
+         <a id="deletePostBTN" role="menuitem" tabindex="-1" onclick="deletePostById(<%=bb.getBlogId()%>)">删除</a>
+      </li>
+   </ul>
+</div>
+
 						</div>
 						<div class="row">
 							<div class="col-sm-10">
@@ -202,13 +277,6 @@ function changeRows(){
 
 
 
-	<!-- Bootstrap core JavaScript
-    ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="../../dist/js/bootstrap.min.js"></script>
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
 </body>
 </html>

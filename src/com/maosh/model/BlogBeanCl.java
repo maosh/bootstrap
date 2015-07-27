@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import java.sql.Timestamp;
 public class BlogBeanCl {
 
 	public BlogBeanCl() {
@@ -55,10 +55,11 @@ public class BlogBeanCl {
 			
 			ct=new ConnDB().getConn();
 			sm=ct.createStatement();
-			ResultSet rs=sm.executeQuery("select * from blog where author='"+u+"'");
+			ResultSet rs=sm.executeQuery("select * from blog where author='"+u+"'order by time desc");
 			
 			while(rs.next()){
 				BlogBean bb=new BlogBean();
+				bb.setBlogId(rs.getInt(1));
 				bb.setAuthor(rs.getString(2));
 				bb.setTitle(rs.getString(3));
 				bb.setContent(rs.getString(4));
@@ -127,12 +128,12 @@ public class BlogBeanCl {
 		}
     }
 	
-    public boolean deleteUserById(int userId){
+    public boolean deleteBlogById(int blogId){
     	boolean b=false;
     	try {
     		ct =new ConnDB().getConn();
     		sm=ct.createStatement();
-    		int a=sm.executeUpdate("delete from users where userId ='"+userId+"'");
+    		int a=sm.executeUpdate("delete from blog where blogId ='"+blogId+"'");
     		if(a==1){
     			b=true;
     		}
@@ -156,12 +157,12 @@ public class BlogBeanCl {
      * @return
      */
 
-    public boolean addBlog(String author, String title, String content){
+    public boolean addBlog(String author, String title, String content, Timestamp ts){
       	boolean b=false;
     	try {
     		ct =new ConnDB().getConn();
     		sm=ct.createStatement();
-    		int a=sm.executeUpdate("insert into blog(author,title,content) values('"+author+"','"+title+"','"+content+"')");
+    		int a=sm.executeUpdate("insert into blog(author,title,content,time) values('"+author+"','"+title+"','"+content+"','"+ts+"')");
     		if(a==1){
     			b=true;
     		}

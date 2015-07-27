@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.maosh.model.BlogBeanCl;
+import java.sql.Timestamp;
 
 public class blogClServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +31,7 @@ public class blogClServlet extends HttpServlet {
 		//get flag 
 		String flag=request.getParameter("flag");
 		String user=request.getParameter("username");
+		System.out.println("flag: "+flag+"in servlet");
 		if(flag.equals("fenye")){
 			try {
 				int pageNow=Integer.parseInt(request.getParameter("pageNow"));
@@ -50,13 +52,13 @@ public class blogClServlet extends HttpServlet {
 			
 		}
 
-		else if(flag.equals("delete")){
+		else if(flag.equals("deleteBlog")){
 			String blogId=request.getParameter("blogId");
 			
 			BlogBeanCl bbc=new BlogBeanCl();
-			if(bbc.deleteUserById(Integer.parseInt(blogId))){
+			if(bbc.deleteBlogById(Integer.parseInt(blogId))){
 				
-				request.getRequestDispatcher("suc.jsp").forward(request, response);
+				request.getRequestDispatcher("suc.jsp").forward(request, response); 
 				
 			}else{
 				request.getRequestDispatcher("fail.jsp").forward(request, response);
@@ -70,10 +72,11 @@ public class blogClServlet extends HttpServlet {
 			String author=request.getParameter("author");
 			String title=request.getParameter("title");
 			String content=request.getParameter("content");
-			
+			Timestamp d = new Timestamp(System.currentTimeMillis()); 
+			System.out.println("author: "+author+"content: "+ content);
 			BlogBeanCl bbc=new BlogBeanCl();
 			
-			if(bbc.addBlog(author, title, content)){
+			if(bbc.addBlog(author, title, content,d)){
 				
 				request.getRequestDispatcher("suc.jsp").forward(request, response);
 				

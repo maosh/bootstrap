@@ -48,9 +48,11 @@ $(document).ready(function(){
 	      content:$("#newPost").val(),
 	    },
 	    function(data,status){
-	    	
-	      alert("发表成功");
-	      $("#newInsert").append(newpost);
+			  var aut=document.getElementById("author").innerHTML;
+			  var con=document.getElementById("newPost").value;   	
+	      alert("发表成功"+data);
+	      var res="<tr><td>"+aut+"</td></tr><tr><td>"+con+"</td></tr>"
+	      $("#newInsert").append(res);
 	    });
 	  });
 	/*  
@@ -99,7 +101,7 @@ function deletePostById(blogId){
 			<li><a href="#">图片</a></li>
 			<li><a href="#">文字</a></li>
 			<li><a href="#">其它</a></li>
-	</div>
+	</ul>
 	</div>
 
 
@@ -121,12 +123,12 @@ function deletePostById(blogId){
 
 			<div class="blog-post input-group  col-md-6">
 				<span class="input-group-addon">new</span>
-				<textarea id=newPost class="form-control" rows="2" " placeholder="What's happening?"></textarea>
+				<textarea id=newPost class="form-control" rows="2"  placeholder="What's happening?"></textarea>
 				<ul>
 				<span><a href="#">表情</a></span>
-				<snan><a href="#">图片</a></span>
-				<snan><a href="#">视频</a></span>
-				<snan><a href="#">@好友</a></span>
+				<span><a href="#">图片</a></span>
+				<span><a href="#">视频</a></span>
+				<span><a href="#">@好友</a></span>
 				<span><button type="button" class=" btn btn-default" id="newPostBTN"
 									aria-label="Left Align">
 									发布

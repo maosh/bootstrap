@@ -78,7 +78,37 @@ public class BlogBeanCl {
 		
 	}
 	
-	
+	//get the user info
+	public ArrayList getBlogById(int blogId){
+		
+		ArrayList al = new ArrayList();
+		
+		try {
+			
+			ct=new ConnDB().getConn();
+			sm=ct.createStatement();
+			ResultSet rs=sm.executeQuery("select * from blog where blogId='"+blogId);
+			
+			while(rs.next()){
+				BlogBean bb=new BlogBean();
+				bb.setBlogId(rs.getInt(1));
+				bb.setAuthor(rs.getString(2));
+				bb.setTitle(rs.getString(3));
+				bb.setContent(rs.getString(4));
+				bb.setTs(rs.getTimestamp(5));
+				al.add(bb);
+			}
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+			// TODO: handle exception
+		} finally {
+			close();
+		}
+		
+		return al;
+		
+	}
 
 	public boolean checkUser(String u, String p){
 		boolean b=false;
@@ -157,14 +187,22 @@ public class BlogBeanCl {
      * @return
      */
 
-    public boolean addBlog(String author, String title, String content, Timestamp ts){
-      	boolean b=false;
+    public int addBlog(String author, String title, String content, Timestamp ts){
+      	int b=0;
     	try {
     		ct =new ConnDB().getConn();
     		sm=ct.createStatement();
     		int a=sm.executeUpdate("insert into blog(author,title,content,time) values('"+author+"','"+title+"','"+content+"','"+ts+"')");
     		if(a==1){
-    			b=true;
+    			rs = sm.executeQuery("select max(blogId) from blog where author='"+author+"'");
+    			
+    			if(rs.next()){
+    				int c=rs.getInt(1);
+    				
+    				if(c>0){
+    					b=c;
+    				}
+    			}
     		}
 			
 		} catch (Exception e) {

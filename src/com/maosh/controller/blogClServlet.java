@@ -75,10 +75,18 @@ public class blogClServlet extends HttpServlet {
 			Timestamp d = new Timestamp(System.currentTimeMillis()); 
 			System.out.println("author: "+author+"content: "+ content);
 			BlogBeanCl bbc=new BlogBeanCl();
-			
-			if(bbc.addBlog(author, title, content,d)){
+			int id=0;
+			id=bbc.addBlog(author, title, content,d);
+			System.out.println(id);
+			if(0 != id){
+			//	request.setAttribute("blogid", (String)Integer.toString(id));
+			//	request.getRequestDispatcher("suc.jsp").forward(request, response);
 				
-				request.getRequestDispatcher("suc.jsp").forward(request, response);
+				//JSONStringer stringer = new JSONStringer();  
+				response.getWriter().write(Integer.toString(id));  
+				response.setContentType("text/html; charset=UTF-8");  
+				
+				
 				
 			}else{
 				request.getRequestDispatcher("fail.jsp").forward(request, response);

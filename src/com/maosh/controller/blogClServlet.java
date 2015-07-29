@@ -83,9 +83,11 @@ public class blogClServlet extends HttpServlet {
 			//	request.getRequestDispatcher("suc.jsp").forward(request, response);
 				
 				//JSONStringer stringer = new JSONStringer();  
-				response.getWriter().write(Integer.toString(id));  
-				response.setContentType("text/html; charset=UTF-8");  
-				
+				//response.getWriter().write(Integer.toString(id));  
+			//	response.setContentType("text/html; charset=UTF-8");  
+				request.setAttribute("id", id);
+				request.setAttribute("ts", d);
+				request.getRequestDispatcher("newPost.jsp").forward(request, response); 
 				
 				
 			}else{

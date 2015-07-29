@@ -62,3 +62,13 @@ body {
  color: blue;
  font-size:28px;
  }
+ .glyphicon{
+  padding: 10px;
+ }
+ 
+ .time{
+ color:#999;
+ }
+ .content{
+ font-family:"SimSun","Times New Roman";
+ }

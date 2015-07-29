@@ -33,62 +33,16 @@
     <![endif]-->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="js//bootstrap-3.3.5-dist/js/bootstrap.js"></script>
+    <script src="js//controller.js"></script>
 <script type="text/javascript">
 
-
-$(document).ready(function(){
-
-	  $("#newPostBTN").click(function(){
-		  var aut=document.getElementById("blog-author");
-		  var con=document.getElementById("newPost");
-	    $.post("blogcl",
-	    {
-	      flag:"addBlog",
-	      author:$("#author").text(),
-	      content:$("#newPost").val(),
-	    },
-	    function(data,status){
-			  var aut=document.getElementById("author").innerHTML;
-			  var con=document.getElementById("newPost").value;   	
-	      alert("发表成功"+data);
-	      var res="<tr><td>"+aut+"</td></tr><tr><td>"+con+"</td></tr>"
-	      $("#newInsert").append(res);
-	    });
-	  });
-	/*  
-	  $("#deletePostBTN").click(function(){
-			alert("delete");
-		  var aut=document.getElementById("blog-author");
-		  var con=document.getElementById("newPost");
-	    $.post("blogcl",
-	    {
-	      flag:"deleteBlog",
-	      postId:postId,
-	    },
-	    function(data,status){
-	    	
-	      alert("发表成功");
-	    });
-	  });
-	*/
-	});
 
 function changeRows(){
 	document.getElementById("newPost").rows="4";
 
 }
-function deletePostById(blogId){
-	    $.post("blogcl",
-	    {
-	      flag:"deleteBlog",
-	      blogId:blogId,
-	    },
-	    function(data,status){
-	    	alert("deleted");
-	    	
-	    		  $("#"+blogId).remove();
-	    });
-}
+
+
 </script>
 </head>
 
@@ -141,64 +95,42 @@ function deletePostById(blogId){
 
 <!-- 新插入
  -->
+ <div class="contentStart">
  <span id="newInsert"></span>
- 
 
-
+<!-- yuanlai
+ -->
 				<%
 					for (int i = 0; i < al.size(); i++) {
 						BlogBean bb = (BlogBean) al.get(i);
 				%>
 
-				<div class="row blog-post" id=<%=bb.getBlogId()%>>
+				<div class="row blog-post start" id=<%=bb.getBlogId()%>>
 					<div class="col-sm-2">
 						<img src="imgs/1.jpg" alt="photo" height="70" width="70" />
 					</div>
 					<div class="col-sm-10">
 						<div class="row">
 							<div class="author col-sm-10"><a href="#"><%=bb.getAuthor()%></a></div>
-							<div hidden="hidden" ><%=bb.getBlogId()%></div>
-
-<div class="dropdown col-sm-2">
-   <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" 
-      data-toggle="dropdown">
-      <span class="caret"></span>
-   </button>
-   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-      <li role="presentation">
-         <a id="deletePostBTN" role="menuitem" tabindex="-1" onclick="deletePostById(<%=bb.getBlogId()%>)">删除</a>
-      </li>
-   </ul>
-</div>
-
+							<div hidden="hidden" ><%=bb.getBlogId()%></div>			
+							<div  class="col-sm-2 delegateDelete">   <a id="deletePostBTN" >删除</a></div>
 						</div>
-						<div class="row">
+						<div class="row content">
 							<div class="col-sm-10">
 								<div><%=bb.getContent()%></div>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row time">
 							<div class="col-sm-10">
 								<div><%=bb.getTs()%></div>
 							</div>
 							</div>
 							<div class="row">
-								<button type="button" class="col-sm-3 btn btn-default"
-									aria-label="Left Align">
-									<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="col-sm-3 btn btn-default"
-									aria-label="Left Align">
-									<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="col-sm-3 btn btn-default"
-									aria-label="Left Align">
-									<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-								</button>
-								<button type="button" class="col-sm-3 btn btn-default"
-									aria-label="Left Align">
-									<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-								</button>
+				            <div style="margin:0;padding:0; width:95%;height:1px;background-color:#EFEFEF;overflow:hidden;margin-top: 2px;"></div>
+									<span class="col-sm-3 glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+									<span class="col-sm-3 glyphicon glyphicon-star" aria-hidden="true"></span>
+									<span class="col-sm-3 glyphicon glyphicon-comment" aria-hidden="true"></span>
+									<span class="col-sm-3 glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
 							</div>
 
 						
@@ -210,7 +142,7 @@ function deletePostById(blogId){
 					}
 				%>
 
-
+</div>
 
 
 				<nav>

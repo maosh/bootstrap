@@ -37,12 +37,6 @@
 <script type="text/javascript">
 
 
-function changeRows(){
-	document.getElementById("newPost").rows="4";
-
-}
-
-
 </script>
 </head>
 

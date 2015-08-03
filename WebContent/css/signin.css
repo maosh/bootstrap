@@ -72,3 +72,40 @@ body {
  .content{
  font-family:"SimSun","Times New Roman";
  }
+ 
+ .warning{
+    background: #fff;
+    -webkit-animation:'wobble' 0.8s ease-in-out;
+    -moz-animation:'wobble' 0.8s ease-in-out;
+    -o-animation:'wobble' 0.8s ease-in-out;
+    animation:'wobble' 0.8s ease-in-out;
+}
+
+@-webkit-keyframes wobble{
+    0%{background: #fff;}
+    25%{background: #FFC0CB;}
+    50%{background: #fff;}
+    75%{background: #FFC0CB;}
+    100%{background: #fff;}
+}
+@-moz-keyframes wobble{
+    0%{background: #fff;}
+    25%{background: #FFC0CB;}
+    50%{background: #fff;}
+    75%{background: #FFC0CB;}
+    100%{background: #fff;}
+}
+@-o-keyframes wobble{
+    0%{background: #fff;}
+    25%{background: #FFC0CB;}
+    50%{background: #fff;}
+    75%{background: #FFC0CB;}
+    100%{background: #fff;}
+}
+@keyframes wobble{
+    0%{background: #fff;}
+    25%{background: #FFC0CB;}
+    50%{background: #fff;}
+    75%{background: #FFC0CB;}
+    100%{background: #fff;}
+}
